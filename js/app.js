@@ -15,27 +15,18 @@ const showProducts = (products) => {
     const image = product.images;
     const div = document.createElement("div");
     div.classList.add("product");
-    // div.innerHTML = `<div class="single-product">
-    //   <div>
-    // <img class="product-image" src=${product.image}></img>
-    //   </div>
-    //   <h3>${product.title}</h3>
-    //   <p>Category: ${product.category}</p>
-    //   <h2>Price: $ ${product.price}</h2>
-    //   <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="buy-now btn btn-success">add to cart</button>
-    //   <button id="details-btn" class="btn btn-danger">Details</button></div>
-    //   `;
-    div.innerHTML = ` <div class="col">
-    <div class="card h-100">
+    div.innerHTML = `
+    <div class="col">
+    <div class="card h-100 single-product">
       <img src="${product.image}" class="card-img-top p-5 w-50 mx-auto" alt="">
       <div class="card-body">
-        <h5 class="card-title fs-1">${product.category.toUpperCase()}</h5>
-        <p class="card-text">Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops</p>
-        <h2>$ ${product.price}</h2>
+      <p class="card-text fw-bold ">${product.title.toUpperCase()}</p>
+      <p class="card-text fs-6"><span class="fw-bold">CAREGORY:</span> ${product.category.toUpperCase()}</p>
+        <h2 style="color: #CD5E04;">$ ${product.price}</h2>
         <div class="d-flex justify-content-around">
 
           <p class="fw-bold">${product.rating.rate} <i class="fas fa-star text-info"></i></p>
-          <p class="fw-bold">${product.rating.count} <span class="text-danger">reviews</span></p>
+          <p class="fw-bold"><i class="fas fa-user me-1 text-success"></i> ${product.rating.count} <span class="text-danger">reviews</span></p>
         </div>
         <div class="d-flex flex-column justify-content-center">
 
@@ -78,12 +69,15 @@ const updatePrice = (id, value) => {
 
 // set innerText function
 const setInnerText = (id, value) => {
-  document.getElementById(id).innerText = Math.round(value);
+  document.getElementById(id).innerText = value.toFixed(2);
 };
 
 // update delivery charge and total Tax
 const updateTaxAndCharge = () => {
   const priceConverted = getInputValue("price");
+  if (priceConverted < 200) {
+    setInnerText("delivery-charge", 20);
+  }
   if (priceConverted > 200) {
     setInnerText("delivery-charge", 30);
     setInnerText("total-tax", priceConverted * 0.2);
@@ -105,58 +99,65 @@ const updateTotal = () => {
 };
 
 
-// showing Product details 
+// Fetching Product details 
 
 const showDetails = id => {
+  const modal = document.getElementById('product-details')
+  modal.textContent = ''
   const url = `https://fakestoreapi.com/products/${id}`
   fetch(url)
     .then(res => res.json())
-    .then(json => showInModal(json))
+    .then(json => showInModal(json,modal))
 }
 
-const showInModal = product => {
-  const modal = document.getElementById('product-details')
-  modal.textContent = ''
+// showing Product details in Modal
+const showInModal = (product, modal) => {
+  
+  
   const div = document.createElement('div')
   div.classList.add('modal-content')
   div.innerHTML = `
+
+  
+
   <div class="modal-header">
   <h5 class="modal-title" id="staticBackdropLabel">${product.category.toUpperCase()}</h5>
   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
-
-
-
-<div class="col">
+  <div class="col">
     <div class="card h-100">
       <img src="${product.image}" class="card-img-top p-5 w-50 mx-auto" alt="">
       <div class="card-body">
-        <h5 class="card-title fs-1"></h5>
-        <p class="card-text">Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops</p>
-        <h2>$ ${product.price}</h2>
+
+        <p class="card-text fw-bold ">${product.title.toUpperCase()}</p>
+        <p class="card-text">${product.description}</p>
+        <h2 style="color: #CD5E04;">$ ${product.price}</h2>
+
         <div class="d-flex justify-content-around">
-
           <p class="fw-bold">${product.rating.rate} <i class="fas fa-star text-info"></i></p>
-          <p class="fw-bold">${product.rating.count} <span class="text-danger">reviews</span></p>
+          <p class="fw-bold"><i class="fas fa-user me-1 text-success"></i> ${product.rating.count} <span
+              class="text-danger">reviews</span></p>
         </div>
-        <div class="d-flex flex-column justify-content-center">
 
-          <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="btn btn-info fw-bold w-100 mx-auto my-2">Add to
+        <div class="d-flex flex-column justify-content-center">
+          <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn"
+            class="btn btn-info fw-bold w-100 mx-auto my-2">Add to
             cart</button>
-          
         </div>
+
       </div>
     </div>
   </div>
-
-
-
-</div>
-<div class="modal-footer">
-  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-</div>
   
   `
   modal.appendChild(div)
 }
+
+
+// Buy now PAY with ssl commarce
+document.getElementById('buy-now').addEventListener('click',function () {
+  const total = document.getElementById('total').innerText
+  const payNow = document.getElementById('pay-now')
+  payNow.innerText = `PAY $ ${total}`
+})

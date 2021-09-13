@@ -15,6 +15,6 @@
 #Optional 
 
 1. Search result debug
-2. Something else when click Buy now button in my cart
+<!-- 2. Something else when click Buy now button in my cart -->
 
 Live Server link: https://7-iazadur.netlify.app/
