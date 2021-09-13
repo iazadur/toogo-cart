@@ -8,8 +8,8 @@
 
 #Bonus
 
-1. Rating count and average rating showing in cart items
-2. Search button and cart items style improvment
+<!-- 1. Rating count and average rating showing in cart items -->
+<!-- 2. Search button and cart items style improvment -->
 3. Click details button and show details in modal
 
 #Optional 
