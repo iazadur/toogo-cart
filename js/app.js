@@ -1,4 +1,5 @@
 const loadProducts = () => {
+  
   const url = `https://raw.githubusercontent.com/ProgrammingHero1/ranga-store-api/main/ranga-api.json`;
   fetch(url)
     .then((response) => response.json())
@@ -7,25 +8,30 @@ const loadProducts = () => {
 
 loadProducts();
 
-
 // show all product in UI 
 const showProducts = (products) => {
   const allProducts = products.map((pd) => pd);
   for (const product of allProducts) {
-    const image = product.images;
+    const image = product.image;
     const div = document.createElement("div");
     div.classList.add("product");
     div.innerHTML = `
     <div class="col">
-    <div class="card h-100 single-product">
-      <img src="${product.image}" class="card-img-top p-5 w-50 mx-auto" alt="">
+    <div class="card h-100 single-product rounded-3">
+      <img src="${image}" class="card-img-top p-5 w-50 mx-auto" alt="">
       <div class="card-body">
       <p class="card-text fw-bold ">${product.title.toUpperCase()}</p>
-      <p class="card-text fs-6"><span class="fw-bold">CAREGORY:</span> ${product.category.toUpperCase()}</p>
+      <p class="card-text fs-6"><span class="fw-bold">CATEGORY:</span> ${product.category.toUpperCase()}</p>
         <h2 style="color: #CD5E04;">$ ${product.price}</h2>
         <div class="d-flex justify-content-around">
 
-          <p class="fw-bold">${product.rating.rate} <i class="fas fa-star text-info"></i></p>
+          <p class="fw-bold">
+          <i class="fas fa-star text-info"></i>
+          <i class="fas fa-star text-info"></i>
+          <i class="fas fa-star text-info"></i>
+          <i class="fas fa-star text-info"></i>
+          <i class="far fa-star text-info"></i>(${product.rating.rate})
+          </p>
           <p class="fw-bold"><i class="fas fa-user me-1 text-success"></i> ${product.rating.count} <span class="text-danger">reviews</span></p>
         </div>
         <div class="d-flex flex-column justify-content-center">
@@ -75,9 +81,7 @@ const setInnerText = (id, value) => {
 // update delivery charge and total Tax
 const updateTaxAndCharge = () => {
   const priceConverted = getInputValue("price");
-  if (priceConverted < 200) {
-    setInnerText("delivery-charge", 20);
-  }
+
   if (priceConverted > 200) {
     setInnerText("delivery-charge", 30);
     setInnerText("total-tax", priceConverted * 0.2);
@@ -121,7 +125,7 @@ const showInModal = (product, modal) => {
   
 
   <div class="modal-header">
-  <h5 class="modal-title" id="staticBackdropLabel">${product.category.toUpperCase()}</h5>
+  <h5 class="modal-title" id="staticBackdropLabel">CATEGORY: ${product.category.toUpperCase()}</h5>
   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
@@ -135,7 +139,14 @@ const showInModal = (product, modal) => {
         <h2 style="color: #CD5E04;">$ ${product.price}</h2>
 
         <div class="d-flex justify-content-around">
-          <p class="fw-bold">${product.rating.rate} <i class="fas fa-star text-info"></i></p>
+          <p class="fw-bold">
+          <i class="fas fa-star text-info"></i>
+          <i class="fas fa-star text-info"></i>
+          <i class="fas fa-star text-info"></i>
+          <i class="fas fa-star text-info"></i>
+          <i class="far fa-star text-info"></i>
+          (${product.rating.rate} )
+          </p>
           <p class="fw-bold"><i class="fas fa-user me-1 text-success"></i> ${product.rating.count} <span
               class="text-danger">reviews</span></p>
         </div>
