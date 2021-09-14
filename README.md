@@ -1,9 +1,10 @@
 <b>Advanced Features</b>:
+
     1. Show Single Product Details
     2. Buy Now with SSLcommarce :D 
     3. Daynamic Rating in Card
 
-#Assignment 07
+<b>#Assignment 07</b>:
 
 1. First item empty , remove the empty space and showing result 3 cloumn in row
 2. Show picture in every item
