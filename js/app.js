@@ -1,12 +1,35 @@
 const loadProducts = () => {
-  
+
   const url = `https://raw.githubusercontent.com/ProgrammingHero1/ranga-store-api/main/ranga-api.json`;
   fetch(url)
     .then((response) => response.json())
     .then((data) => showProducts(data));
+  
 };
 
 loadProducts();
+
+
+
+// Product Rating 
+// total rating
+const starsTotal = 5;
+
+// get Ratings
+const getRatings = (r) => {
+
+  // get percentange
+  const starPercentage = (r / starsTotal) * 100
+
+  // round to nearrest 10
+  const starRounded = `${starPercentage.toFixed(2)}%`
+
+  return starRounded
+}
+
+
+
+
 
 // show all product in UI 
 const showProducts = (products) => {
@@ -17,32 +40,29 @@ const showProducts = (products) => {
     div.classList.add("product");
     div.innerHTML = `
     <div class="col">
-    <div class="card h-100 single-product rounded-3">
-      <img src="${image}" class="card-img-top p-5 w-50 mx-auto" alt="">
+    <div class="card h-100 rounded-3">
+      <img src="${image}" class="card-img-top my-3" alt="">
       <div class="card-body">
       <p class="card-text fw-bold ">${product.title.toUpperCase()}</p>
       <p class="card-text fs-6"><span class="fw-bold">CATEGORY:</span> ${product.category.toUpperCase()}</p>
         <h2 style="color: #CD5E04;">$ ${product.price}</h2>
-        <div class="d-flex justify-content-around">
+        
 
-          <p class="fw-bold">
-          <i class="fas fa-star text-info"></i>
-          <i class="fas fa-star text-info"></i>
-          <i class="fas fa-star text-info"></i>
-          <i class="fas fa-star text-info"></i>
-          <i class="far fa-star text-info"></i>(${product.rating.rate})
-          </p>
+          <div class="stars-outer fw-bolder"><div class="stars-inner" style="width:${getRatings(product.rating.rate)}"></div>
+          </div>(${product.rating.rate})
+
           <p class="fw-bold"><i class="fas fa-user me-1 text-success"></i> ${product.rating.count} <span class="text-danger">reviews</span></p>
-        </div>
+        
         <div class="d-flex flex-column justify-content-center">
 
-          <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="btn btn-info fw-bold w-50 mx-auto my-2">Add to
+          <button onclick="addToCart(${product.id},${product.price})" id="addToCart-btn" class="btn btn-info fw-bold  my-2">Add to
             cart</button>
-          <button id="details-btn" onclick="showDetails(${product.id})" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-success fw-bold w-50 mx-auto">Details</button>
+          <button id="details-btn" onclick="showDetails(${product.id})" data-bs-toggle="modal" data-bs-target="#staticBackdrop" class="btn btn-success fw-bold">Details</button>
         </div>
       </div>
     </div>
-  </div>`;
+  </div>
+  `
     document.getElementById("all-products").appendChild(div);
   }
 };
@@ -103,7 +123,7 @@ const updateTotal = () => {
 };
 
 
-// Fetching Product details 
+// Fetching single Product details 
 
 const showDetails = id => {
   const modal = document.getElementById('product-details')
@@ -111,27 +131,24 @@ const showDetails = id => {
   const url = `https://fakestoreapi.com/products/${id}`
   fetch(url)
     .then(res => res.json())
-    .then(json => showInModal(json,modal))
+    .then(json => showInModal(json, modal))
 }
 
 // showing Product details in Modal
 const showInModal = (product, modal) => {
-  
-  
+
+
   const div = document.createElement('div')
   div.classList.add('modal-content')
   div.innerHTML = `
-
-  
-
-  <div class="modal-header">
+<div class="modal-header">
   <h5 class="modal-title" id="staticBackdropLabel">CATEGORY: ${product.category.toUpperCase()}</h5>
   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 </div>
 <div class="modal-body">
   <div class="col">
     <div class="card h-100">
-      <img src="${product.image}" class="card-img-top p-5 w-50 mx-auto" alt="">
+      <img src="${product.image}" class="card-img-top my-3" alt="">
       <div class="card-body">
 
         <p class="card-text fw-bold ">${product.title.toUpperCase()}</p>
@@ -140,12 +157,9 @@ const showInModal = (product, modal) => {
 
         <div class="d-flex justify-content-around">
           <p class="fw-bold">
-          <i class="fas fa-star text-info"></i>
-          <i class="fas fa-star text-info"></i>
-          <i class="fas fa-star text-info"></i>
-          <i class="fas fa-star text-info"></i>
-          <i class="far fa-star text-info"></i>
-          (${product.rating.rate} )
+            <div class="stars-outer fw-bolder">
+              <div class="stars-inner" style="width:${getRatings(product.rating.rate)}"></div>
+            </div>(${product.rating.rate})
           </p>
           <p class="fw-bold"><i class="fas fa-user me-1 text-success"></i> ${product.rating.count} <span
               class="text-danger">reviews</span></p>
@@ -160,15 +174,16 @@ const showInModal = (product, modal) => {
       </div>
     </div>
   </div>
-  
   `
   modal.appendChild(div)
 }
 
 
 // Buy now PAY with ssl commarce
-document.getElementById('buy-now').addEventListener('click',function () {
+document.getElementById('buy-now').addEventListener('click', function () {
   const total = document.getElementById('total').innerText
   const payNow = document.getElementById('pay-now')
   payNow.innerText = `PAY $ ${total}`
 })
+
+
