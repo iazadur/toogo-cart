@@ -1,28 +1,28 @@
 <b>Advanced Features</b>:
 
     1. Show Single Product Details
-    2. Buy Now with SSLcommarce :D 
+    2. Buy Now with SSLcommarce 😜😜 
     3. Daynamic Rating in Card
 
-<b>#Assignment 07</b>:
+<b>Assignment 07</b>:
 
-1. First item empty , remove the empty space and showing result 3 cloumn in row
-2. Show picture in every item
-3. Total product count and remove $
-4. Total price show in My Cart
-5. Exect price show in My Cart
-
-
-#Bonus
-
-1. Rating count and average rating showing in cart items
-2. Search button and cart items style improvment
-3. Click details button and show details in modal
+    1. First item empty , remove the empty space and showing result 3 cloumn in row
+    2. Show picture in every item
+    3. Total product count and remove $
+    4. Total price show in My Cart
+    5. Exect price show in My Cart
 
 
-#Optional 
+<b>Bonus</b>
 
-1. Search result debug
-2. Something else when click Buy now button in my cart
+    1. Rating count and average rating showing in cart items
+    2. Search button and cart items style improvment
+    3. Click details button and show details in modal
+
+
+<b>Optional</b>
+
+    1. Search result debug
+    2. Something else when click Buy now button in my cart
 
 Live Server link: https://7-iazadur.netlify.app/
