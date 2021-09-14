@@ -1,7 +1,7 @@
-#Advanced Features:
-    1) Show Single Product Details
-    2) Buy Now with SSLcommarce :D 
-    3) Daynamic Rating in Card
+<b>Advanced Features</b>:
+    1. Show Single Product Details
+    2. Buy Now with SSLcommarce :D 
+    3. Daynamic Rating in Card
 
 #Assignment 07
 
